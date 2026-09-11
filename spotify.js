@@ -17,7 +17,7 @@ function formatTime(seconds) {
 
 async function getSongs(folder) {
     currfolder = folder;
-    let a = await fetch(`http://127.0.0.1:5500/Assets/${folder}/`);
+    let a = await fetch(`Assets/${folder}/`);
     let response = await a.text();
     let div = document.createElement("div");
     div.innerHTML = response;
@@ -61,7 +61,7 @@ const playMusic = (track, pause = false) => {
     console.log("Playing:", track);
 console.log("Current src:", currentSong.src);
      //let audio = new Audio("/Assets/songs/" +track)
-    currentSong.src = `/Assets/${currfolder}/` + track;
+    currentSong.src = `Assets/${currfolder}/` + track;
 
     if (!pause) {
         currentSong.play();
@@ -73,7 +73,7 @@ console.log("Current src:", currentSong.src);
 }
 
 async function displayAlbums() {
-    let a = await fetch(`http://127.0.0.1:5500/Assets/songs/`);
+    let a = await fetch("Assets/songs/");
     let response = await a.text();
     let div = document.createElement("div");
     div.innerHTML = response;
@@ -102,7 +102,7 @@ async function displayAlbums() {
 
 
 
-            let a = await fetch(`http://127.0.0.1:5500/Assets/songs/${folder}/info.json`);
+            let a = await fetch(`Assets/songs/${folder}/info.json`);
             let response = await a.json();
             console.log(response);
             cardContainer.innerHTML = cardContainer.innerHTML + `<div data-folder="${folder}" class="card">
