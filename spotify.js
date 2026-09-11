@@ -17,11 +17,8 @@ function formatTime(seconds) {
 
 async function getSongs(folder) {
     currfolder = folder;
-    let a = await fetch(`Assets/${folder}/`);
-    let response = await a.text();
-    let div = document.createElement("div");
-    div.innerHTML = response;
-    let as = div.getElementsByTagName("a");
+    let res = await fetch(`Assets/${folder}/songs.json`);
+    let response = await res.json();
     songs = [];
     for (let index = 0; index < as.length; index++) {
         const element = as[index];
@@ -72,7 +69,7 @@ console.log("Current src:", currentSong.src);
     document.querySelector(".songtime").innerHTML = "00:00 / 00:00"
 }
 
-async function displayAlbums() {
+/*async function displayAlbums() {
     let a = await fetch("Assets/songs/");
     let response = await a.text();
     let div = document.createElement("div");
@@ -127,7 +124,46 @@ async function displayAlbums() {
         });
     });
 
+}*/
+async function displayAlbums() {
+    const albums = [
+        "ncs",
+        "cs",
+        "party_songs",
+        "K_PoP",
+        "Sad_Songs",
+        "Hindi_lofi_Mix",
+        "Relax_Mind_Lofi",
+        "Bollywood_hindi"
+    ];
+
+    let cardContainer = document.querySelector(".cardContainer");
+    cardContainer.innerHTML = "";
+
+    for (const folder of albums) {
+        let a = await fetch(`Assets/songs/${folder}/info.json`);
+        let response = await a.json();
+
+        cardContainer.innerHTML += `
+        <div data-folder="${folder}" class="card">
+            <div class="play">
+                ▶
+            </div>
+            <img src="Assets/songs/${folder}/cover.jpg">
+            <h2>${response.title}</h2>
+            <p>${response.description}</p>
+        </div>`;
+    }
+
+    Array.from(document.getElementsByClassName("card")).forEach(card => {
+        card.addEventListener("click", async () => {
+            songs = await getSongs(`songs/${card.dataset.folder}`);
+            playMusic(songs[0]);
+        });
+    });
 }
+
+
 async function main() {
     //GET THE LIST OF SONG
     await getSongs("songs/ncs");
