@@ -1,0 +1,21 @@
+{
+  "name": "spotify-clone",
+  "version": "1.0.0",
+  "description": "A Spotify clone web application",
+  "main": "index.html",
+  "scripts": {
+    "dev": "npx serve .",
+    "start": "npx serve ."
+  },
+  "keywords": [
+    "spotify",
+    "clone",
+    "music",
+    "player"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@vercel/analytics": "^2.0.1"
+  }
+}
